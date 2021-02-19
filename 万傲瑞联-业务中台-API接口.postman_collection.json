@@ -1,0 +1,3668 @@
+{
+	"info": {
+		"_postman_id": "36983334-b48d-437d-bcff-d67e518baf45",
+		"name": "万傲瑞联-业务中台",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "基础服务能力",
+			"item": [
+				{
+					"name": "组织管理",
+					"item": [
+						{
+							"name": "创建组织",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    pm.environment.set(\"unit_id\", responseJson.payload.results.id);\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"name\": \"{{$randomCompanyName}}\",\r\n            \"countryCode\": \"{{$randomCountryCode}}\",\r\n            \"province\": \"{{$randomCountry}}\",\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"county\": \"{{$randomStreetName}}\",\r\n            \"address\": \"{{$randomStreetAddress}}\",\r\n            \"zip\": \"{{$randomInt}}\",\r\n            \"email\": \"{{$randomExampleEmail}}\",\r\n            \"phone\": \"17{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n            \"logo\": \"{{$randomBusinessImage}}\",\r\n            \"industry\": \"互联网\",\r\n            \"subIndustry\": \"电子设备/计算机软件\",\r\n            \"remark\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/organization/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"organization",
+										"create"
+									]
+								},
+								"description": "添加一个新的组织，在云梭平台创建一个新的组织"
+							},
+							"response": []
+						},
+						{
+							"name": "查询组织",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"id\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/organization/getOrList",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"organization",
+										"getOrList"
+									]
+								},
+								"description": "当请求体***有传入***组织id时，查询唯一的组织信息；\r\n当请求体***未传入***组织id时，查询该应用下的所有组织信息；"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "人员管理",
+					"item": [
+						{
+							"name": "创建人员",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"no\": \"{{$randomBankAccount}}\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"email\": \"{{$randomExampleEmail}}\",\r\n            \"mobilePhone\": \"13{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n            \"cardNo\": \"{{$randomCreditCardMask}}\",\r\n            \"idCardNo\": \"{{$randomBankAccountIban}}\",\r\n            \"avatarUrl\": \"https://zk-ddopen-bucket-dev-1257511866.cos.ap-guangzhou.myqcloud.com/1602841710861_image.jpg\",\r\n            \"facePhotoUrl\": \"https://zkbiocloudbahrain.s3.me-south-1.amazonaws.com/1599472976946_image.jpg\",\r\n            \"avatarBase64\": \"\",\r\n            \"facePhotoBase64\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"create"
+									]
+								},
+								"description": "添加一个新的人员，在云梭平台创建一个新的人员"
+							},
+							"response": []
+						},
+						{
+							"name": "删除人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ids\": [\r\n                {{person_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"delete"
+									]
+								},
+								"description": "将云梭平台中存在的人员删除"
+							},
+							"response": []
+						},
+						{
+							"name": "更新人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{person_id}}\",\r\n            \"firstName\": \"coop66\",\r\n            \"lastName\": \"ma222\",\r\n            \"email\": \"coop.ma666@zkteco.com\",\r\n            \"mobilePhone\": \"19959999999\",\r\n            \"cardNo\": \"\",\r\n            \"idCardNo\": \"350981199911117128\",\r\n            \"avatarUrl\": \"https://yn1.jxlxsc.cn/uploads/userfiles/1/images/pageimg/20200615/1-2006151141414.jpg\",\r\n            \"facePhotoUrl\": \"https://yn1.jxlxsc.cn/uploads/userfiles/1/images/pageimg/20200615/1-2006151141414.jpg\",\r\n            \"avatarBase64\": \"\",\r\n            \"facePhotoBase64\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"update"
+									]
+								},
+								"description": "人员信息有变动后需更新云梭平台中保存的人员信息"
+							},
+							"response": []
+						},
+						{
+							"name": "读取人员",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{person_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/getOrList",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"getOrList"
+									]
+								},
+								"description": "发送人员ID至云梭平台，返回平台中存储的该人员信息"
+							},
+							"response": []
+						},
+						{
+							"name": "查询人员",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var results = responseJson.payload.results;\r",
+											"    \r",
+											"    var personIds = new Array();\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        personIds[i] = '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"person_ids\", personIds);\r",
+											"\r",
+											"    if(results.length > 0) {\r",
+											"        var personId = results[0].id;\r",
+											"        var personNo = results[0].no;\r",
+											"        pm.environment.set(\"person_id\", personId);\r",
+											"        pm.environment.set(\"person_no\", personNo);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/getOrList",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"getOrList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "分页查询人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/person/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"person",
+										"page"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "设备管理",
+					"item": [
+						{
+							"name": "添加设备",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"sn\": \"{{device_sn}}\",\r\n            \"name\": \"设备-0030\",\r\n            \"zoneId\": \"Asia/Shanghai\",\r\n            \"remark\": \"SpeedFace-V5L\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/add",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"add"
+									]
+								},
+								"description": "添加一个新的设备，在云梭平台添加一台新的设备"
+							},
+							"response": []
+						},
+						{
+							"name": "删除设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ids\": [\r\n                {{device_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"delete"
+									]
+								},
+								"description": "将云梭平台中存在的设备删除。当区域（门禁权限组）与设备绑定时，无法删除设备；必须解绑区域（门禁权限组）与设备的关系。"
+							},
+							"response": []
+						},
+						{
+							"name": "更新设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{device_id}}\",\r\n            \"sn\": \"{{device_sn}}\",\r\n            \"name\": \"IX666777\",\r\n            \"enable\": 1,\r\n            \"zoneId\": \"Asia/Shanghai\",\r\n            \"remark\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "读取设备",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{device_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/getOrList",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"getOrList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询设备",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var results = responseJson.payload.results;\r",
+											"\r",
+											"    var deviceIds = new Array();\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        deviceIds[i] = '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"device_ids\", deviceIds);\r",
+											"\r",
+											"    if(results.length > 0) {\r",
+											"        var deviceId = results[0].id;\r",
+											"        var deviceSn = results[0].sn;\r",
+											"        pm.environment.set(\"device_id\", deviceId);\r",
+											"        pm.environment.set(\"device_sn\", deviceSn);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/getOrList",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"getOrList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "分页查询设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"page"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "启用设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{device_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/enable",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"enable"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "禁用设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{device_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/basic/v1/device/disable",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"basic",
+										"v1",
+										"device",
+										"disable"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "门禁服务能力",
+			"item": [
+				{
+					"name": "门管理",
+					"item": [
+						{
+							"name": "修改门名称",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{door_id}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomInt}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/door/name/modify",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"door",
+										"name",
+										"modify"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改门参数",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{door_id}}\",\r\n            \"parameters\": [\r\n                {\r\n                    \"name\": \"doorSensorType\",\r\n                    \"value\": \"1\"\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/door/parameter/modify",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"door",
+										"parameter",
+										"modify"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询门",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var doorIds = new Array();\r",
+											"    var results = responseJson.payload.results;\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        doorIds[i] =  '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"door_ids\", doorIds);\r",
+											"    \r",
+											"    if(results.length > 0) {\r",
+											"        var doorId = results[0].id;\r",
+											"        pm.environment.set(\"door_id\", doorId);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/door/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"door",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "远程开门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{door_id}}\",\r\n            \"personNo\": \"{{person_no}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/door/remote/open",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"door",
+										"remote",
+										"open"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "时间段管理",
+					"item": [
+						{
+							"name": "创建全天时间段",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"name\": \"24小时时间段\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/allday/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"allday",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "创建时间段",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomInt}}\",\r\n            \"configuration\": [\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 0\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 1\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 2\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 3\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 4\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 5\r\n                },\r\n                {\r\n                    \"endTime\": \"18:00\",\r\n                    \"startTime\": \"08:00\",\r\n                    \"week\": 6\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除时间段",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\":\"{{unit_id}}\",\r\n            \"id\": \"{{timetable_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "更新时间段",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{timetable_id}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomInt}}\",\r\n            \"configuration\": [\r\n                {\r\n                    \"endTime\": \"23:59\",\r\n                    \"startTime\": \"00:00\",\r\n                    \"week\": 2\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "读取时间段",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{timetable_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/get",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询时间段",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var timetableIds = new Array();\r",
+											"    var results = responseJson.payload.results;\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        timetableIds[i] =  '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"timetable_ids\", timetableIds);\r",
+											"    \r",
+											"    if(results.length > 0) {\r",
+											"        var timetableId = results[0].id;\r",
+											"        pm.environment.set(\"timetable_id\", timetableId);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/timetable/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"timetable",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					}
+				},
+				{
+					"name": "权限组管理",
+					"item": [
+						{
+							"name": "创建权限组",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomInt}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除权限组",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{level_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "更新权限组名称",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{level_id}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomInt}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "读取权限组",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{level_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/get",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询权限组",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var levelIds = new Array();\r",
+											"    var results = responseJson.payload.results;\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        levelIds[i] =  '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"level_ids\", levelIds);\r",
+											"    \r",
+											"    if(results.length > 0) {\r",
+											"        var levelId = results[0].id;\r",
+											"        pm.environment.set(\"level_id\", levelId);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "门禁权限管理",
+					"item": [
+						{
+							"name": "权限组绑定时间段",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{level_id}}\",\r\n            \"timetableId\": \"{{timetable_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/timetable/bind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"timetable",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "权限组绑定人员",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\",\r\n            \"personIds\": [\r\n                {{person_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/person/bind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"person",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "权限组解绑人员",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\",\r\n            \"personIds\": [\r\n                {{person_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/person/unbind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"person",
+										"unbind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询权限组分配的人员",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var personIds = new Array();\r",
+											"    var list = responseJson.payload.results.list;\r",
+											"    for(i = 0; i < list.length; i++) {\r",
+											"        personIds[i] =  '\"' + list[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"person_ids\", personIds);\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/person/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"person",
+										"page"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "权限组绑定门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\",\r\n            \"doorIds\": [\r\n                {{door_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/door/bind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"door",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "权限组解绑门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\",\r\n            \"doorIds\": [\r\n                {{door_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/door/unbind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"door",
+										"unbind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询权限组分配的门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"levelId\": \"{{level_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/level/door/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"level",
+										"door",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询人员分配的权限组",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"personId\": \"{{person_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/person/level/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"person",
+										"level",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "规则管理",
+					"item": [
+						{
+							"name": "创建规则",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var results = responseJson.payload.results;\r",
+											"    var ruleId = results.id;\r",
+											"    pm.environment.set(\"rule_id\", ruleId);\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"name\": \"rule-1\",\r\n            \"week\": \"1111100\",\r\n            \"startTime\": \"08:00\",\r\n            \"endTime\": \"18:00\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除规则",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{rule_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "更新规则",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{rule_id}}\",\r\n            \"name\": \"rule-3\",\r\n            \"week\": \"1111101\",\r\n            \"startTime\": \"10:00\",\r\n            \"endTime\": \"17:00\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "读取规则",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{rule_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/get",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询规则",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "规则分配门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ruleId\": \"{{rule_id}}\",\r\n            \"bindDoorIds\": [],\r\n            \"unbindDoorIds\": []\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/door/assign",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"door",
+										"assign"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "规则分配人员",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ruleId\": \"{{rule_id}}\",\r\n            \"bindPersonIds\": [],\r\n            \"unbindPersonIds\": []\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/person/assign",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"person",
+										"assign"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询规则分配的门",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ruleId\": \"{{rule_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/door/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"door",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询规则分配的人员",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ruleId\": \"{{rule_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/access/v1/rule/person/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"access",
+										"v1",
+										"rule",
+										"person",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "考勤服务能力",
+			"item": [
+				{
+					"name": "设备管理模式",
+					"item": [
+						{
+							"name": "设置设备管理模式",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": { \r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"pattern\": \"group\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/organization/pattern/setup",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"organization",
+										"pattern",
+										"setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询设备管理模式",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/organization/pattern/query",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"organization",
+										"pattern",
+										"query"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "考勤组管理",
+					"item": [
+						{
+							"name": "创建考勤组",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\":\"{{unit_id}}\",\r\n            \"code\": \"{{$randomCreditCardMask}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomNameSuffix}}\",\r\n            \"remark\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"ids\": [\r\n                {{group_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "更新考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{group_id}}\",\r\n            \"code\": \"{{$randomCreditCardMask}}\",\r\n            \"name\": \"{{$randomNamePrefix}}-{{$randomNameSuffix}}\",\r\n            \"remark\": \"\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "读取考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"id\": \"{{group_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/get",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询考勤组",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = JSON.parse(responseBody);\r",
+											"\r",
+											"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+											"if(responseJson.code == \"00000000\") {\r",
+											"    var groupIds = new Array();\r",
+											"    var results = responseJson.payload.results;\r",
+											"    for(i = 0; i < results.length; i++) {\r",
+											"        groupIds[i] =  '\"' + results[i].id + '\"';\r",
+											"    }\r",
+											"    pm.environment.set(\"group_ids\", groupIds);\r",
+											"    \r",
+											"    if(results.length > 0) {\r",
+											"        var groupId = results[0].id;\r",
+											"        pm.environment.set(\"group_id\", groupId);\r",
+											"    }\r",
+											"} else {\r",
+											"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+											"    tests[msg] = false;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "设备绑定考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\",\r\n            \"deviceIds\": [\r\n                {{device_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/device/bind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"device",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "设备解绑考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\",\r\n            \"deviceIds\": [\r\n                {{device_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/device/unbind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"device",
+										"unbind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询考勤组分配的设备",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/device/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"device",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "人员绑定考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\",\r\n            \"personIds\": [\r\n                {{person_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/person/bind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"person",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "人员解绑考勤组",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\",\r\n            \"personIds\": [\r\n                {{person_ids}}\r\n            ]\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/person/unbind",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"person",
+										"unbind"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询考勤组分配的人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": { \r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"groupId\": \"{{group_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/group/person/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"group",
+										"person",
+										"page"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "清空设备分配的人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"deviceId\": \"{{device_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/device/person/clear",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"device",
+										"person",
+										"clear"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "考勤设备人员",
+					"item": [
+						{
+							"name": "查询设备分配的人员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "lang",
+										"type": "text",
+										"value": "{{lang}}"
+									},
+									{
+										"key": "tz",
+										"type": "text",
+										"value": "{{tz}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": { \r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"deviceId\": \"{{device_id}}\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/device/person/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"device",
+										"person",
+										"page"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "考勤打卡记录",
+					"item": [
+						{
+							"name": "分页查询考勤打卡记录",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"(function () {\r",
+											"    var date = new Date();\r",
+											"    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);\r",
+											"    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);\r",
+											"\r",
+											"    pm.environment.set(\"start_time\", firstDay.getTime() / 1000);\r",
+											"    pm.environment.set(\"end_time\", lastDay.getTime() / 1000);\r",
+											"})();"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "{{lang}}",
+										"type": "text"
+									},
+									{
+										"key": "tz",
+										"value": "{{tz}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"payload\": {\r\n        \"curPage\": 1,\r\n        \"pageSize\": 10,\r\n        \"params\": {\r\n            \"unitId\": \"{{unit_id}}\",\r\n            \"startTime\": {{start_time}},\r\n            \"endTime\": {{end_time}}\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/open/bmp/attendance/v1/punch/page",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"open",
+										"bmp",
+										"attendance",
+										"v1",
+										"punch",
+										"page"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "获取accessToken",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"(function () {\r",
+							"    var appKey = pm.environment.get(\"app_key\");\r",
+							"    var appSecret = pm.environment.get(\"app_secret\");\r",
+							"    var timestamp = getTime();\r",
+							"    pm.environment.set(\"timestamp\", timestamp);\r",
+							"    var nonce = getNonce();\r",
+							"    pm.environment.set(\"nonce\", nonce);\r",
+							"    pm.environment.set(\"sign\", calcSign(appKey, appSecret, timestamp, nonce));\r",
+							"})();\r",
+							"\r",
+							"function getTime() {\r",
+							"    return new Date().getTime()-300000;\r",
+							"}\r",
+							"\r",
+							"function getNonce() {\r",
+							"    return pm.variables.replaceIn(\"{{$randomBankAccount}}\");\r",
+							"}\r",
+							"\r",
+							"function calcSign(appKey, appSecret, timestamp, nonce) {\r",
+							"    return CryptoJS.MD5(appKey + timestamp + nonce + appSecret).toString();\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 方法一\r",
+							"const responseJson = JSON.parse(responseBody);\r",
+							"\r",
+							"tests[\"Is Success\"] = responseJson.code == \"00000000\";\r",
+							"if(responseJson.code == \"00000000\") {\r",
+							"    pm.environment.set(\"access_token\", \"Bearer \" + responseJson.accessToken);\r",
+							"} else {\r",
+							"    var msg = \"code: \" + responseJson.code + \" message: \" + responseJson.message;\r",
+							"    tests[msg] = false;\r",
+							"}\r",
+							"\r",
+							"// 方法二\r",
+							"// const responseJson = pm.response.json();\r",
+							"// pm.environment.set(\"access_token\", \"Bearer \" + responseJson.payload.results.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/open/oauth/v1/token?appKey={{app_key}}&timestamp={{timestamp}}&nonce={{nonce}}&sign={{sign}}&lang={{lang}}&tz={{tz}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"open",
+						"oauth",
+						"v1",
+						"token"
+					],
+					"query": [
+						{
+							"key": "appKey",
+							"value": "{{app_key}}"
+						},
+						{
+							"key": "timestamp",
+							"value": "{{timestamp}}"
+						},
+						{
+							"key": "nonce",
+							"value": "{{nonce}}"
+						},
+						{
+							"key": "sign",
+							"value": "{{sign}}"
+						},
+						{
+							"key": "lang",
+							"value": "{{lang}}"
+						},
+						{
+							"key": "tz",
+							"value": "{{tz}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
